@@ -1,70 +1,60 @@
+import java.io.IOException;
 import java.sql.*;
 import java.util.Scanner;
 
 public class SQLTask {
+	
+	static void MenueMain() {
+		
+		System.out.println("Please Choice one Option:");
+		System.out.println("1. Create Student Table");
+		System.out.println("2. Create Subjects Table");
+		System.out.println("3. List Top 100 Students");
+		System.out.println("4. List Top 50 Subjects");
+		System.out.println("5. Add Student");
+		System.out.println("6. Add subject ");
+		System.out.println("7. Exit ");
+	}
+	
+	
 
-	public static void main(String[] args) {
+	//7,8
+	public static   void topten() {
+		String sql="SELECT * FROM Stud ORDER BY id LIMIT 10;";
+	}
+	public static   void topFifteen() {
+		String sql="SELECT * FROM Subjects ORDER BY id LIMIT 15;";
+	}
 
-        // Creating the connection using Oracle DB
-        // Note: url syntax is standard, so do grasp
-        String url = "jdbc:sqlserver://192.168.100.100:1433;databaseName=SchoolMgt;encrypt=true;trustServerCertificate=true";
+	public static void main(String[] args) throws NumberFormatException, IOException{
+		Scanner sc = new Scanner(System.in);		
+		MenueMain();
+		
+		do {
+		int select = sc.nextInt();
+//		boolean isExit = true;
+//		while (isExit) {
 
-        // Username and password to access DB
-        // Custom initialization
-        String user = "sa";
-        String pass = "root";
-
-        // Entering the data
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("enter id");
-        Integer id = scanner.nextInt();
-
-        System.out.println("enter first name");
-        String fname = scanner.next();
-        
-        System.out.println("enter last name");
-        String lname = scanner.next();
-
-        System.out.println("enter birthdate");
-        String birthdate = scanner.next();
-
-        // Inserting data using SQL query
-        String sql = "insert into Students values(" + id + ",'" + fname + "','" + lname + "','" + birthdate + "')";
-
-        // Connection class object
-        Connection con = null;
-
-        // Try block to check for exceptions
-        try {
-
-            Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
-            // Registering drivers
-            DriverManager.registerDriver(driver);
-
-            // Reference to connection interface
-            con = DriverManager.getConnection(url, user,
-                    pass);
-
-            // Creating a statement
-            Statement st = con.createStatement();
-
-            // Executing query
-            int m = st.executeUpdate(sql);
-            if (m >=  1)
-                System.out.println(
-                        "inserted successfully : " + sql);
-            else
-                System.out.println("insertion failed");
-
-            // Closing the connections
-            con.close();
-        }
-
-        // Catch block to handle exceptions
-        catch (Exception ex) {
-            // Display message when exceptions occurs
-            System.err.println(ex);
-        }
+		switch (select) {
+		case 1:
+			StudTable CreateStudentTable = new StudTable();
+			CreateStudentTable.studentSQL();
+			break;
+			
+			
+		case 2:
+			SubjectsTable CreateSubjectTable = new SubjectsTable();
+			CreateSubjectTable.subjectSQL();
+			break;
+			
+			
+		}
+		
+		
+		} 
+		
+		while (true);
+	}
 }
-}
+
+
